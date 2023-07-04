@@ -16,6 +16,9 @@ CMD cd /src/workspace && \
   git clone --recursive https://github.com/ETLCPP/etl.git && \ 
   cd etl && \
   git checkout 20.36.1 && \
+  export CC=gcc && \
+  export CXX=g++ && \
+  gcc --version && \
   cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DBUILD_TESTS=OFF \
