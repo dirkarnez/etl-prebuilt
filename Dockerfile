@@ -12,14 +12,17 @@ RUN sudo mkdir -p /src/workspace
 
 VOLUME /src/workspace
 
+# export CC=aarch64-none-elf-gcc && \
+# export CXX=aarch64-none-elf-g++ && \
+# aarch64-none-elf-gcc --version && \
+  
 CMD cd /src/workspace && \
   git clone --recursive https://github.com/ETLCPP/etl.git && \ 
   cd etl && \
   git checkout 20.36.1 && \
-  export CC=aarch64-none-elf-gcc && \
-  export CXX=aarch64-none-elf-g++ && \
-  aarch64-none-elf-gcc --version && \
   cmake \
+  -DCMAKE_C_COMPILER=aarch64-none-elf-gcc \
+  -DCMAKE_CXX_COMPILER=aarch64-none-elf-g++ \
   -DCMAKE_BUILD_TYPE=Release \
   -DBUILD_TESTS=OFF \
   -DETL_USE_TYPE_TRAITS_BUILTINS=OFF \
