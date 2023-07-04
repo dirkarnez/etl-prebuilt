@@ -22,10 +22,10 @@ CMD cd /src/workspace && \
   cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DBUILD_TESTS=OFF \
-  -DNO_STL=ON \
   -DETL_USE_TYPE_TRAITS_BUILTINS=OFF \
   -DETL_USER_DEFINED_TYPE_TRAITS=OFF \
   -DETL_FORCE_TEST_CPP03=OFF \
+  -DCMAKE_CXX_FLAGS="-D__STDC_LIMIT_MACROS" \
   -DCMAKE_INSTALL_PREFIX="cmake-build/cmake-installation" -B./cmake-build && \
   cd cmake-build && \
   cmake --build . && \
