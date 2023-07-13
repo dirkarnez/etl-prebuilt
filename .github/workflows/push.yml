@@ -45,7 +45,7 @@ jobs:
           git clone --recursive https://github.com/ETLCPP/etl.git && ^
           cd etl && ^
           git checkout 20.36.1 && ^
-          cmake ^
+          cmake -G "Unix Makefiles" ^
           -DCMAKE_SYSTEM_NAME=Generic ^
           -DCMAKE_SYSTEM_PROCESSOR=avr ^
           -DCMAKE_C_COMPILER=avr-gcc ^
