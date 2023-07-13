@@ -63,7 +63,7 @@ jobs:
         with:
           type: 'zip'
           directory: "etl/cmake-build/cmake-installation"
-          filename: "${{ env.mingwTargetZip }}"
+          filename: "${{ env.targetZip }}"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
