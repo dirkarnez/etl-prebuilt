@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.container }}
     env:
       libraryName: etl
-      targetZip: etl-${{ github.ref_name }}.zip
+      targetZip: etl-${{ github.ref_name }}-avr8-gnu-toolchain-3.7.0.1796-win32.any.x86_64.zip
     steps:
       - uses: actions/checkout@v3
       
@@ -57,14 +57,12 @@ jobs:
           -DCMAKE_MAKE_PROGRAM=mingw32-make ^
           -DCMAKE_BUILD_TYPE=Release ^
           -DBUILD_TESTS=OFF ^
-          -DETL_USE_TYPE_TRAITS_BUILTINS=OFF ^
-          -DETL_USER_DEFINED_TYPE_TRAITS=OFF ^
-          -DETL_FORCE_TEST_CPP03=OFF ^
-          -DCMAKE_CXX_FLAGS="-D__STDC_LIMIT_MACROS" ^
           -DCMAKE_INSTALL_PREFIX="cmake-build/cmake-installation" -B./cmake-build && ^
           cd cmake-build && ^
           cmake --build . && ^
           cmake --install .
+          
+          # -DCMAKE_CXX_FLAGS="-D__STDC_LIMIT_MACROS" ^
           
       - name: Archive Release
         uses: thedoctor0/zip-release@master
