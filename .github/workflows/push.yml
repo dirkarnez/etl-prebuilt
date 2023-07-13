@@ -54,6 +54,7 @@ jobs:
           -DCMAKE_SYSTEM_PROCESSOR=avr ^
           -DCMAKE_C_COMPILER=avr-gcc ^
           -DCMAKE_CXX_COMPILER=avr-g++ ^
+          -DCMAKE_MAKE_PROGRAM=mingw32-make ^
           -DCMAKE_BUILD_TYPE=Release ^
           -DBUILD_TESTS=OFF ^
           -DETL_USE_TYPE_TRAITS_BUILTINS=OFF ^
