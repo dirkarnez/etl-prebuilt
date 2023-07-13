@@ -33,7 +33,7 @@ jobs:
           curl https://github.com/Kitware/CMake/releases/download/v3.24.0/cmake-3.24.0-windows-x86_64.zip -L -O -J && ^
           7z.exe x cmake-3.24.0-windows-x86_64.zip && ^
           curl https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-3.7.0.1796-win32.any.x86_64.zip -L -O -J && ^
-          7z.exe x avr8-gnu-toolchain-3.7.0.1796-win32.any.x86_64.zip && ^
+          7z.exe x avr8-gnu-toolchain-3.7.0.1796-win32.any.x86_64.zip -y && ^
           curl https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/PortableGit-2.38.1-64-bit.7z.exe -L -O -J && ^
           7z.exe x PortableGit-2.38.1-64-bit.7z.exe -o"PortableGit-2.38.1-64-bit" && ^
           set PATH=^
