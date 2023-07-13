@@ -61,9 +61,9 @@ jobs:
           cd cmake-build && ^
           cmake --build . && ^
           cmake --install .
-          
-          # -DCMAKE_CXX_FLAGS="-D__STDC_LIMIT_MACROS" ^
-          
+
+ # -DCMAKE_CXX_FLAGS="-D__STDC_LIMIT_MACROS"
+ 
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
