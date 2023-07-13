@@ -7,22 +7,74 @@ on:
       - 'c*'
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        container: [ windows-latest ] #  ubuntu-latest
+        build_type: [ Release ]
+    runs-on: ${{ matrix.container }}
     env:
       libraryName: etl
       targetZip: etl-${{ github.ref_name }}.zip
     steps:
       - uses: actions/checkout@v3
       
-      - run: mkdir -p ./workspace
-      
-      - name: Build the stack
-        run: docker-compose up --build && docker-compose down
-        
+#       - name: Build the stack 'ubuntu-latest'
+#         if: ${{ matrix.container == 'ubuntu-latest' }}
+#         run: |
+#           mkdir -p ./workspace && \
+#           docker-compose up --build && \
+#           docker-compose down
+          
+      - name: Build the stack 'windows-latest'
+        if: ${{ matrix.container == 'windows-latest' }}
+        shell: cmd
+        run: |
+          curl https://github.com/Kitware/CMake/releases/download/v3.24.0/cmake-3.24.0-windows-x86_64.zip -L -O -J && ^
+          7z.exe x cmake-3.24.0-windows-x86_64.zip && ^
+          curl https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-3.7.0.1796-win32.any.x86_64.zip -L -O -J && ^
+          7z.exe x avr8-gnu-toolchain-3.7.0.1796-win32.any.x86_64.zip && ^
+          curl https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/PortableGit-2.38.1-64-bit.7z.exe -L -O -J && ^
+          7z.exe x PortableGit-2.38.1-64-bit.7z.exe -o"PortableGit-2.38.1-64-bit" && ^
+          set PATH=^
+          ${{ github.workspace }}\avr8-gnu-toolchain-win32_x86_64\avr\bin;^
+          ${{ github.workspace }}\avr8-gnu-toolchain-win32_x86_64\bin;^
+          ${{ github.workspace }}\cmake-3.24.0-windows-x86_64\bin;^
+          ${{ github.workspace }}\PortableGit-2.38.1-64-bit\bin;l
+          git clone --recursive https://github.com/ETLCPP/etl.git && ^
+          cd etl && ^
+          git checkout 20.36.1 && ^
+          cmake ^
+          -DCMAKE_C_COMPILER=avr-gcc ^
+          -DCMAKE_CXX_COMPILER=avr-g++ ^
+          -DCMAKE_BUILD_TYPE=Release ^
+          -DBUILD_TESTS=OFF ^
+          -DETL_USE_TYPE_TRAITS_BUILTINS=OFF ^
+          -DETL_USER_DEFINED_TYPE_TRAITS=OFF ^
+          -DETL_FORCE_TEST_CPP03=OFF ^
+          -DCMAKE_CXX_FLAGS="-D__STDC_LIMIT_MACROS" ^
+          -DCMAKE_INSTALL_PREFIX="cmake-build/cmake-installation" -B./cmake-build && ^
+          cd cmake-build && ^
+          cmake --build . && ^
+          cmake --install .
+          
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: "etl/cmake-build/cmake-installation"
+          filename: "${{ env.mingwTargetZip }}"
+          
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "workspace/etl/${{ env.targetZip }}"
+          artifacts: "etl/cmake-build/cmake-installation/${{ env.targetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
+          
+#       - name: Release prebuilt
+#         uses: ncipollo/release-action@v1
+#         with:
+#           artifacts: "workspace/etl/${{ env.targetZip }}"
+#           allowUpdates: true
+#           token: ${{ secrets.GITHUB_TOKEN }}
