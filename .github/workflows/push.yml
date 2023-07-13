@@ -36,7 +36,11 @@ jobs:
           7z.exe x avr8-gnu-toolchain-3.7.0.1796-win32.any.x86_64.zip -y && ^
           curl https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/PortableGit-2.38.1-64-bit.7z.exe -L -O -J && ^
           7z.exe x PortableGit-2.38.1-64-bit.7z.exe -o"PortableGit-2.38.1-64-bit" && ^
+          curl https://github.com/2641797006/c/blob/master/GCC-zip/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z?raw=true -L -O -J && ^
+          7z.exe x x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
           set PATH=^
+          ${{ github.workspace }}\mingw64;^
+          ${{ github.workspace }}\mingw64\bin;^
           ${{ github.workspace }}\avr8-gnu-toolchain-win32_x86_64\avr\bin;^
           ${{ github.workspace }}\avr8-gnu-toolchain-win32_x86_64\bin;^
           ${{ github.workspace }}\cmake-3.24.0-windows-x86_64\bin;^
