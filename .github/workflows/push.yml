@@ -40,7 +40,7 @@ jobs:
           ${{ github.workspace }}\avr8-gnu-toolchain-win32_x86_64\avr\bin;^
           ${{ github.workspace }}\avr8-gnu-toolchain-win32_x86_64\bin;^
           ${{ github.workspace }}\cmake-3.24.0-windows-x86_64\bin;^
-          ${{ github.workspace }}\PortableGit-2.38.1-64-bit\bin;l
+          ${{ github.workspace }}\PortableGit-2.38.1-64-bit\bin;
           git clone --recursive https://github.com/ETLCPP/etl.git && ^
           cd etl && ^
           git checkout 20.36.1 && ^
