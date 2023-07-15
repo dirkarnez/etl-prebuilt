@@ -28,6 +28,8 @@ CMD cd /src/workspace && \
   -DETL_USE_TYPE_TRAITS_BUILTINS=OFF \
   -DETL_USER_DEFINED_TYPE_TRAITS=OFF \
   -DETL_FORCE_TEST_CPP03=OFF \
+  -DNO_STL=ON \
+  -DETL_CXX_STANDARD=11 \
   -DCMAKE_CXX_FLAGS="-D__STDC_LIMIT_MACROS" \
   -DCMAKE_INSTALL_PREFIX="cmake-build/cmake-installation" -B./cmake-build && \
   cd cmake-build && \
